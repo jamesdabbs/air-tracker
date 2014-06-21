@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :votes
+  has_many :topics, foreign_key: "created_by"
 end
