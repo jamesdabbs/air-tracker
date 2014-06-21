@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "application#root"
+
+  resources :topics, only: [:index, :new, :create, :show]
+
+  root to: "topics#new"
 end

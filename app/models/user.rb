@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :votes
   has_many :topics, foreign_key: "created_by"
+
+  def name
+    "FIXME"
+  end
 end
