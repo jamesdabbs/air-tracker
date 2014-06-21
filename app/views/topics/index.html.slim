@@ -1,3 +1,17 @@
-ul
-  - @topics.each do |topic|
-    li= link_to topic.title, topic
+=link_to "New Topic", new_topic_path
+table
+  thead
+    tr
+      th Topic
+      th
+  tbody
+    - @topics.each do |topic|
+      tr
+        td= link_to topic.title, topic
+        td
+          / FIXME: n+1
+          - if vote = current_user.votes.where(topic_id: topic.id).first
+            = button_to "Unvote", topic_vote_path(topic), method: :delete
+          - else
+            = button_to "Vote", topic_vote_path(topic), method: :create
+
