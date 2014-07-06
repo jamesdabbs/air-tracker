@@ -1,5 +1,5 @@
-=link_to "New Topic", new_topic_path
-table
+=link_to "New Topic", new_topic_path, class: "btn btn-primary"
+table class="table table-hover"
   thead
     tr
       th Topic
@@ -7,11 +7,11 @@ table
   tbody
     - @topics.each do |topic|
       tr
-        td= link_to topic.title, topic
+        td= link_to topic.title, topic, class: "btn btn-info"
         td
           / FIXME: n+1
           - if vote = current_user.votes.where(topic_id: topic.id).first
-            = button_to "Unvote", topic_vote_path(topic), method: :delete
+            = button_to "Unvote", topic_vote_path(topic), method: :delete, class: "btn btn-danger"
           - else
-            = button_to "Vote", topic_vote_path(topic), method: :create
+            = button_to "Vote", topic_vote_path(topic), method: :create,  class: "btn btn-success"
 
