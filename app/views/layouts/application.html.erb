@@ -13,6 +13,9 @@
         <nav>
 		  <ul class= "nav pull-right">
   		    <li><%= link_to "Topics", topics_path %>
+          <% if user_signed_in? %>
+            <li><%= button_to "Sign out", destroy_user_session_path, method: :delete %> </li>
+          <% end %>            
 		  </ul>
 		</nav>
     </div>

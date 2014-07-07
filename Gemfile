@@ -10,6 +10,14 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'slim-rails'
 
+#omniauth gems
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+# gem 'omniauth-linkedin'
+
+gem 'figaro'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
