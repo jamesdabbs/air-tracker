@@ -1,5 +1,7 @@
 = link_to "New Topic", new_topic_path, class: "btn btn-primary"
 
+/ TODO: add page controls
+
 table.table.table-hover
   thead
     tr
@@ -10,9 +12,8 @@ table.table.table-hover
       tr
         td= link_to topic.title, topic, class: "btn btn-info"
         td
-          / FIXME: n+1
           - if current_user
-            - if vote = current_user.votes.where(topic_id: topic.id).first
+            - if vote = @votes[topic]
               = button_to "Unvote", topic_vote_path(topic), method: :delete, class: "btn btn-danger"
             - else
               = button_to "Vote", topic_vote_path(topic), method: :create,  class: "btn btn-success"

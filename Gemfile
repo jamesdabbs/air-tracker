@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'slim-rails'
 gem 'hashie'
+gem 'kaminari'
 
 #omniauth gems
 gem 'omniauth'
