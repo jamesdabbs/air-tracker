@@ -2,7 +2,9 @@ class TopicsController < ApplicationController
   before_filter :authenticate_user!, only: [:new, :create]
 
   def index
-    @topics = Topic.all
+    @topics = Topic.page params[:page]
+    @votes = current_user.votes.where(topic: @topics).
+      each_with_object({}) { |h,v| h[v.topic] = v } if current_user
   end
 
   def new

@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     name || "FIXME"
   end
 
- validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
+  validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
@@ -30,21 +30,19 @@ class User < ActiveRecord::Base
 
     # Create the user if needed
     if user.nil?
-
       # Get the existing user by email if the provider gives us a verified email.
       # If no verified email was provided we assign a temporary email and ask the
       # user to verify it on the next step via UsersController.finish_signup
-      email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
-      email = auth.info.email if email_is_verified
-      user = User.where(:email => email).first if email
+      email = identity.email
+      user = User.where(email: email).first if email
 
       # Create the user if it's a new registration
       if user.nil?
         user = User.new(
-          name: auth.extra.raw_info.name,
-          #username: auth.info.nickname || auth.uid,
-          email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
-          password: Devise.friendly_token[0,20]
+          name:      identity.name,
+          email:     identity.email,
+          image_url: identity.image,
+          password:  Devise.friendly_token[0,20]
         )
         user.skip_confirmation!
         user.save!
@@ -56,6 +54,7 @@ class User < ActiveRecord::Base
       identity.user = user
       identity.save!
     end
+
     user
   end
 
@@ -63,8 +62,18 @@ class User < ActiveRecord::Base
     self.email && self.email !~ TEMP_EMAIL_REGEX
   end
 
+  def avatar_url
+    image_url || gravatar_url
+  end
+
   protected
     def confirmation_required?
       false
+    end
+
+    def gravatar_url
+      default_url = "http://air-tracker.herokuapp.com/images/ruby-logo.png"
+      gravatar_id = Digest::MD5.hexdigest(email.downcase)
+      "http://gravatar.com/avatar/#{gravatar_id}.png?s=48&d=#{CGI.escape(default_url)}"
     end
 end
