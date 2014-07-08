@@ -39,9 +39,10 @@ class User < ActiveRecord::Base
       # Create the user if it's a new registration
       if user.nil?
         user = User.new(
-          name:     identity.name,
-          email:    identity.email,
-          password: Devise.friendly_token[0,20]
+          name:      identity.name,
+          email:     identity.email,
+          image_url: identity.image,
+          password:  Devise.friendly_token[0,20]
         )
         user.skip_confirmation!
         user.save!
@@ -61,8 +62,18 @@ class User < ActiveRecord::Base
     self.email && self.email !~ TEMP_EMAIL_REGEX
   end
 
+  def avatar_url
+    image_url || gravatar_url
+  end
+
   protected
     def confirmation_required?
       false
+    end
+
+    def gravatar_url
+      default_url = "http://air-tracker.herokuapp.com/images/ruby-logo.png"
+      gravatar_id = Digest::MD5.hexdigest(email.downcase)
+      "http://gravatar.com/avatar/#{gravatar_id}.png?s=48&d=#{CGI.escape(default_url)}"
     end
 end

@@ -15,11 +15,9 @@ class Identity < ActiveRecord::Base
     Hashie::Mash.new auth_data
   end
 
-  def name
-    auth.info.name || raise("Could not find name in #{auth_info}")
-  end
-
-  def email
-    auth.info.email || raise("Could not find email in #{auth_info}")
+  %w(name email image).each do |attr|
+    define_method attr do
+      auth.info.send(attr) || raise("Could not find #{attr} in #{auth}")
+    end
   end
 end
