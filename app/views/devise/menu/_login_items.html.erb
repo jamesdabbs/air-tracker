@@ -1,0 +1,47 @@
+<% if user_signed_in? %>
+<li>
+  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+</li>
+<% else %>
+<li>
+  <%= link_to "Sign up", new_user_registration_path %>
+</li>
+<li>
+  <div class="btn-group">
+    <!-- <a id="loginDropdown" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">Login</a> -->
+    <button type="button" id="loginDropdown" class="btn btn-default navbar-btn dropdown-toggle">
+      Sign in <span class="caret"></span>
+    </button>          
+    <ul class="dropdown-menu signin-menu" role="menu">
+    <h3>Login</h3>            
+      <li>
+        <%= form_for(:user, url: session_path(:user)) do |f| %>
+        <div class="form-group">
+          <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
+        </div>
+        <div class="form-group">
+          <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+        </div>              
+        <div class="checkbox">
+          <label>
+          <%= f.check_box :remember_me %> Remember me
+          </label>
+        </div>
+        <div class="form-group">
+          <%= f.submit 'Sign in', class: "btn btn-default" %>
+        </div>
+        <div class="form-group">
+          <%= link_to "Forgot your password?", new_password_path(:user) %>
+        </div>
+        <% end %>
+        
+      </li>            
+      <li class="divider"></li>
+      <li class="dropdown-header">Login with</li>            
+      <li><a href="#">Facebook</a></li>
+      <li><a href="#">Twitter</a></li>
+
+    </ul>
+  </div>        
+</li>
+<% end %>

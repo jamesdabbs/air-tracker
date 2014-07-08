@@ -7,26 +7,31 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header class="navbar navbar-fixed-top navbar-inverse">
-    <div class="navbar-inner">
-      <div class="container">
-        <nav>
-		  <ul class= "nav pull-right">
-  		    <li><%= link_to "Topics", topics_path %>
-          <% if user_signed_in? %>
-            <li><%= button_to "Sign out", destroy_user_session_path, method: :delete %> </li>
-          <% end %>            
-		  </ul>
-		</nav>
-    </div>
-      </div>
-  </header>
-<hr>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-<div class = "conatainer">
-<%= yield %>
-</div>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <a class="navbar-brand">AIRTracker</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <%= link_to "Topics", topics_path %>
+      </li>
+      <li>
+        <a href="#">Meetup</a>
+      </li>
+    </ul>
+
+    <!-- sign in/up/out layout -->
+    <ul class="nav navbar-nav navbar-right">
+      <%= render 'devise/menu/login_items' %>
+    </ul>
+
+  </div>
+</nav>
+
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+  <div class = "conatainer">
+    <%= yield %>
+  </div>
 </body>
 </html>
