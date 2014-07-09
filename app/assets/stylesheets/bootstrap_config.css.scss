@@ -31,3 +31,22 @@ textarea {
 	padding-left: 10px;
 	padding-right: 10px;
 }
+
+.fa.fa-arrow-up, .fa.fa-arrow-down {
+	/*color: orange;*/
+}
+
+.fa.fa-arrow-up.active {
+	color: orange;
+}
+.fa.fa-arrow-down.active {
+	color: red;
+}
+
+.up-vote {
+	color: green;
+}
+
+.down-vote {
+	color: red;
+}

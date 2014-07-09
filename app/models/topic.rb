@@ -3,4 +3,8 @@ class Topic < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
   has_many :votes
+
+  def short_description
+  	description.first(140)
+  end
 end
