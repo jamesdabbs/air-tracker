@@ -66,6 +66,10 @@ class User < ActiveRecord::Base
     image_url || gravatar_url
   end
 
+  def has_voted_for?(topic)
+    votes.exists?(topic_id: topic.id)
+  end
+
   protected
     def confirmation_required?
       false

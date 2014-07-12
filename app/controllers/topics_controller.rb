@@ -1,6 +1,5 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, only: [:new, :create]
-# TODO: change votes from create and destroy to 0 or 1 to be able to track if a user has voted on a topic
 
   def index
     @topics = Topic.page params[:page]

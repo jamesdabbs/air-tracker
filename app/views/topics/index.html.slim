@@ -12,22 +12,19 @@ table.table.table-hover
       tr
         td
           - if user_signed_in?
-            / TODO: change votes from create and destroy to 0 or 1 to be able to track if a user has voted on a topic
-            = link_to "<i class='fa fa-arrow-up #{'active' if @votes[topic]}'></i>".html_safe, topic_vote_path(topic), method: :create
-            = link_to "<i class='fa fa-arrow-down #{'active' if @votes[topic]}'></i>".html_safe, topic_vote_path(topic), method: :delete
+            - if @votes[topic]
+              = link_to "<i class='fa fa-arrow-up #{'active' if (@votes[topic].score == 1) }'></i>".html_safe, upvote_topic_vote_path(topic), method: :patch
+              = link_to "<i class='fa fa-arrow-down #{'active' if (@votes[topic].score == 0) }'></i>".html_safe, downvote_topic_vote_path(topic), method: :patch
+            - else
+              = link_to "<i class='fa fa-arrow-up'></i>".html_safe, upvote_topic_vote_path(topic), method: :patch
+              = link_to "<i class='fa fa-arrow-down'></i>".html_safe, downvote_topic_vote_path(topic), method: :patch              
+
         td
           .media-body
             h4.media-heading
               = link_to topic.title, topic
               small = " by #{topic.user.display_name}"              
             = topic.short_description
-        / td= link_to topic.title, topic, class: "btn btn-info"
-        / td
-        /   - if current_user
-        /     - if vote = @votes[topic]
-        /       = button_to "Unvote", topic_vote_path(topic), method: :delete, class: "btn btn-danger"
-        /     - else
-        /       = button_to "Vote", topic_vote_path(topic), method: :create,  class: "btn btn-success"
+
         td.col-md-3
-          = topic.votes.count
-                
+          = topic.votes.where(score: 1).count
