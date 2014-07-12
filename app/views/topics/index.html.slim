@@ -1,19 +1,33 @@
-= link_to "New Topic", new_topic_path, class: "btn btn-primary"
 
 / TODO: add page controls
 
 table.table.table-hover
   thead
     tr
-      th Topic
       th
+      th Suggested Topics
+      th Votes
   tbody
     - @topics.each do |topic|
       tr
-        td= link_to topic.title, topic, class: "btn btn-info"
         td
-          - if current_user
-            - if vote = @votes[topic]
-              = button_to "Unvote", topic_vote_path(topic), method: :delete, class: "btn btn-danger"
-            - else
-              = button_to "Vote", topic_vote_path(topic), method: :create,  class: "btn btn-success"
+          - if user_signed_in?
+            / TODO: change votes from create and destroy to 0 or 1 to be able to track if a user has voted on a topic
+            = link_to "<i class='fa fa-arrow-up #{'active' if @votes[topic]}'></i>".html_safe, topic_vote_path(topic), method: :create
+            = link_to "<i class='fa fa-arrow-down #{'active' if @votes[topic]}'></i>".html_safe, topic_vote_path(topic), method: :delete
+        td
+          .media-body
+            h4.media-heading
+              = link_to topic.title, topic
+              small = " by #{topic.user.display_name}"              
+            = topic.short_description
+        / td= link_to topic.title, topic, class: "btn btn-info"
+        / td
+        /   - if current_user
+        /     - if vote = @votes[topic]
+        /       = button_to "Unvote", topic_vote_path(topic), method: :delete, class: "btn btn-danger"
+        /     - else
+        /       = button_to "Vote", topic_vote_path(topic), method: :create,  class: "btn btn-success"
+        td.col-md-3
+          = topic.votes.count
+                

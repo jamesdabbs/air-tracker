@@ -10,16 +10,20 @@ html lang="en"
 body
   nav.navbar.navbar-default.navbar-fixed-top
     .container
+      a.navbar-brand
+        i.fa.fa-send-o.fa-lg
+        |  AIRTracker
       ul.nav.navbar-nav
-        li= link_to "Topics", topics_path
-
-      ul.nav.navbar-nav.pull-right
-        - if current_user
-          li= link_to current_user.name, edit_user_registration_path
-          li= link_to "Sign out", destroy_user_session_path, method: :delete
-        - else
-          li= link_to "Sign in", new_user_session_path
-
+        li
+          = link_to "Topics", topics_path
+        -if user_signed_in?
+          li
+            = link_to "<i class='fa fa-plus'></i> New Topic".html_safe, new_topic_path
+        li
+          a[href="http://www.meetup.com/atlantaruby/"]
+            | ATLRUG
+      ul.nav.navbar-nav.navbar-right
+        = render 'devise/menu/login_items'
   .container
     .flash
       - flash.each do |name, msg|
