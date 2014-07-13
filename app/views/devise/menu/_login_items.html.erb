@@ -40,10 +40,13 @@
         
       </li>            
       <li class="divider"></li>
-      <li class="dropdown-header">Login with</li>            
-      <li><a href="#">Facebook</a></li>
-      <li><a href="#">Twitter</a></li>
-
+      <li class="dropdown-header">Login with</li>
+      <li>
+        <%= link_to "<i class='fa fa-facebook-square'></i> Facebook".html_safe, user_omniauth_authorize_path(:facebook) %>
+      </li>
+      <li>
+        <%= link_to "<i class='fa fa-github'></i> Github".html_safe, user_omniauth_authorize_path(:github) %>
+      </li>
     </ul>
   </div>        
 </li>
