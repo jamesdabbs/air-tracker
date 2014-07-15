@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable
-
+  validates :name, length: { maximum: 30}, presence: true
+  
   has_many :votes
   has_many :topics, foreign_key: "created_by"
 

@@ -1,30 +1,31 @@
 
 / TODO: add page controls
-
-table.table.table-hover
-  thead
-    tr
-      th
-      th Suggested Topics
-      th Votes
-  tbody
-    - @topics.each do |topic|
+.row
+  table.table.table-hover
+    thead
       tr
-        td
-          - if user_signed_in?
-            - if @votes[topic]
-              = link_to "<i class='fa fa-arrow-up #{'active' if (@votes[topic].score == 1) }'></i>".html_safe, upvote_topic_vote_path(topic), method: :patch
-              = link_to "<i class='fa fa-arrow-down #{'active' if (@votes[topic].score == 0) }'></i>".html_safe, downvote_topic_vote_path(topic), method: :patch
-            - else
-              = link_to "<i class='fa fa-arrow-up'></i>".html_safe, upvote_topic_vote_path(topic), method: :patch
-              = link_to "<i class='fa fa-arrow-down'></i>".html_safe, downvote_topic_vote_path(topic), method: :patch              
+        th
+        th Suggested Topics
+        th Votes
+    tbody
+      - @topics.each do |topic|
+        tr
+          td
+            - if user_signed_in?
+              - if @votes[topic]
+                = link_to "<i class='fa fa-arrow-up #{'active' if (@votes[topic].score == 1) }'></i>".html_safe, upvote_topic_vote_path(topic), method: :patch
+                = link_to "<i class='fa fa-arrow-down #{'active' if (@votes[topic].score == 0) }'></i>".html_safe, downvote_topic_vote_path(topic), method: :patch
+              - else
+                = link_to "<i class='fa fa-arrow-up'></i>".html_safe, upvote_topic_vote_path(topic), method: :patch
+                = link_to "<i class='fa fa-arrow-down'></i>".html_safe, downvote_topic_vote_path(topic), method: :patch              
+          td
+            .media-body
+              h4.media-heading
+                = link_to topic.title, topic
+                small = " by #{topic.user.display_name}"              
+              = topic.short_description
 
-        td
-          .media-body
-            h4.media-heading
-              = link_to topic.title, topic
-              small = " by #{topic.user.display_name}"              
-            = topic.short_description
-
-        td.col-md-3
-          = topic.votes.where(score: 1).count
+          td.col-md-3
+            = topic.votes.where(score: 1).count
+.row
+  = paginate @topics
