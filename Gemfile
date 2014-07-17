@@ -32,9 +32,14 @@ end
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'factory_girl'
+  gem 'factory_girl_rails'
 end
 
+group :test do
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'nokogiri', '1.6.1'
+end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
