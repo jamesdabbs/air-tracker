@@ -39,6 +39,7 @@ group :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'nokogiri', '1.6.1'
+  gem 'launchy'
 end
 group :production do
   gem 'pg'

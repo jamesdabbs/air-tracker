@@ -8,17 +8,19 @@ feature "Signups", :type => :feature do
 
     describe "with valid information" do
       before do
-        fill_in "Name", with: valid_user.name
-        fill_in "Password", with: valid_user.password
-        fill_in "Confirmation", with: valid_user.password
+        within("//form[@id='new_user']") do
+          fill_in "Name", with: valid_user.name
+          fill_in "Email", with: valid_user.email
+          fill_in "Password", with: valid_user.password
+          fill_in "Password confirmation", with: valid_user.password
+        end
       end
 
       it "should create user" do
-        expect { click_button submit}.to change(User, :count).by(1)
+        expect { click_button 'Sign up' }.to change(User, :count).by(1)
+        expect(current_path).to eq(root_path)        
+        should have_selector('a', text: "Logout")
       end
     end
-  end
-  describe "new user signup" do
-    pending "TODO"
   end
 end
