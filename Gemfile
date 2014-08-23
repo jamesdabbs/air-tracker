@@ -14,7 +14,6 @@ gem 'slim-rails'
 gem 'hashie'
 gem 'kaminari'
 
-#omniauth gems
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
@@ -27,6 +26,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry-rails'
+  gem 'quiet_assets'
   gem 'spring'
   gem 'spring-commands-rspec'
 end

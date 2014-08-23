@@ -5,12 +5,6 @@ class Identity < ActiveRecord::Base
 
   serialize :auth_data, JSON
 
-  def self.find_for_oauth(auth)
-    where(provider: auth.provider, uid: auth.uid).
-      create_with(auth_data: auth).
-      first_or_create!
-  end
-
   def auth
     Hashie::Mash.new auth_data
   end

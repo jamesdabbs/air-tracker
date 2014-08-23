@@ -20,7 +20,8 @@
             .media-body
               h4.media-heading
                 = link_to topic.title, topic
-                small = " by #{topic.user.display_name}"              
+                / FIXME: n+1
+                small = " by #{topic.user.name}"              
               = topic.short_description
 
           td.col-md-3
