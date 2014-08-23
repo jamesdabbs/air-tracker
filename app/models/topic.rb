@@ -4,7 +4,11 @@ class Topic < ActiveRecord::Base
   validates :description, presence: true
   has_many :votes
 
+  def upvotes
+    votes.where("score > 0")
+  end
+
   def short_description
-  	description.first(140)
+    description.first(140)
   end
 end

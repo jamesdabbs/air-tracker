@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
-  before_filter :authenticate_user!, only: [:new, :create]
+  before_filter :authenticate_user!, except: [:index, :show]
+  before_filter :find_topic, only: [:show, :upvote, :downvote]
 
   def index
     @topics = Topic.page params[:page]
@@ -21,10 +22,23 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @topic = Topic.find params[:id]
   end
 
-  private
+  def upvote
+    current_user.upvote @topic
+    redirect_to :back
+  end
+
+  def downvote
+    current_user.downvote @topic
+    redirect_to :back
+  end
+
+private
+
+  def find_topic
+    @topic = Topic.find params[:id]
+  end
 
   def create_params
     params.require(:topic).permit(:title, :description)

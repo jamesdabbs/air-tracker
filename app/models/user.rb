@@ -71,6 +71,16 @@ class User < ActiveRecord::Base
     votes.exists?(topic_id: topic.id)
   end
 
+  def upvote(topic)
+    vote = votes.where(topic: topic).first_or_initialize
+    vote.update_attribute :score, 1
+  end
+
+  def downvote(topic)
+    vote = votes.where(topic: topic).first_or_initialize
+    vote.update_attribute :score, 0
+  end
+
   protected
     def confirmation_required?
       false

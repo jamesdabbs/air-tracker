@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   match '/profile/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 
   resources :topics, only: [:index, :new, :create, :show] do
-    resource :vote, only: [:create, :destroy] do
-    	patch 'downvote'
-    	patch 'upvote'
+    member do
+      post :upvote
+      post :downvote
     end
   end
 

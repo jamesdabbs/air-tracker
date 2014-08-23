@@ -11,13 +11,11 @@
       - @topics.each do |topic|
         tr
           td
-            - if user_signed_in?
-              - if @votes[topic]
-                = link_to "<i class='fa fa-arrow-up #{'active' if (@votes[topic].score == 1) }'></i>".html_safe, upvote_topic_vote_path(topic), method: :patch
-                = link_to "<i class='fa fa-arrow-down #{'active' if (@votes[topic].score == 0) }'></i>".html_safe, downvote_topic_vote_path(topic), method: :patch
-              - else
-                = link_to "<i class='fa fa-arrow-up'></i>".html_safe, upvote_topic_vote_path(topic), method: :patch
-                = link_to "<i class='fa fa-arrow-down'></i>".html_safe, downvote_topic_vote_path(topic), method: :patch              
+            / FIXME: add active status
+            = link_to upvote_topic_path(topic), method: :post, class: 'upvote' do
+              i.fa.fa-arrow-up
+            = link_to downvote_topic_path(topic), method: :post, class: 'downvote' do
+              i.fa.fa-arrow-down
           td
             .media-body
               h4.media-heading
@@ -26,6 +24,6 @@
               = topic.short_description
 
           td.col-md-3
-            = topic.votes.where(score: 1).count
+            = topic.upvotes.count
 .row
   = paginate @topics

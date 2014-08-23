@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature "Signups", :type => :feature do
-  subject { page }
   describe "signup page" do
     let(:valid_user) { FactoryGirl.build(:user) }
     before { visit new_user_registration_path }
@@ -19,7 +18,7 @@ feature "Signups", :type => :feature do
       it "should create user" do
         expect { click_button 'Sign up' }.to change(User, :count).by(1)
         expect(current_path).to eq(root_path)        
-        should have_selector('a', text: "Logout")
+        expect(page).to have_selector('a', text: "Logout")
       end
     end
   end

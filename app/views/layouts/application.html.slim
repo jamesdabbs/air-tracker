@@ -7,28 +7,28 @@ html lang="en"
     = javascript_include_tag 'application'
     = csrf_meta_tags
 
-body
-  nav.navbar.navbar-default.navbar-fixed-top
-    .container
-      a.navbar-brand
-        i.fa.fa-send-o.fa-lg
-        |  AIRTracker
-      ul.nav.navbar-nav
-        li
-          = link_to "Topics", topics_path
-        -if user_signed_in?
+  body
+    nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        a.navbar-brand
+          i.fa.fa-send-o.fa-lg
+          |  AIRTracker
+        ul.nav.navbar-nav
           li
-            = link_to "<i class='fa fa-plus'></i> New Topic".html_safe, new_topic_path
-        li
-          a[href="http://www.meetup.com/atlantaruby/"]
-            | ATLRUG
-      ul.nav.navbar-nav.navbar-right
-        = render 'devise/menu/login_items'
-  .container
-    .flash
-      - flash.each do |name, msg|
-        - type = translate_flash_class name
-        div(class="alert alert-#{type}" data-type=type)
-          = msg
+            = link_to "Topics", topics_path
+          -if user_signed_in?
+            li
+              = link_to "<i class='fa fa-plus'></i> New Topic".html_safe, new_topic_path
+          li
+            a[href="http://www.meetup.com/atlantaruby/"]
+              | ATLRUG
+        ul.nav.navbar-nav.navbar-right
+          = render 'devise/menu/login_items'
+    .container
+      .flash
+        - flash.each do |name, msg|
+          - type = translate_flash_class name
+          div(class="alert alert-#{type}" data-type=type)
+            = msg
 
-    = yield
+      = yield
