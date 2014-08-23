@@ -11,5 +11,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: "topics#index"
+  root to: "static_pages#home"
 end
