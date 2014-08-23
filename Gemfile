@@ -28,6 +28,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'pry-rails'
   gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :development, :test do
@@ -40,7 +41,9 @@ group :test do
   gem 'capybara'
   gem 'nokogiri', '1.6.1'
   gem 'launchy'
+  gem 'simplecov'
 end
+
 group :production do
   gem 'pg'
   gem 'rails_12factor'
