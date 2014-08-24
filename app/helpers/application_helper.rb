@@ -11,4 +11,8 @@ module ApplicationHelper
       klass.to_sym
     end
   end
+
+  def markdown text
+    Markdown.render(text).html_safe
+  end
 end

@@ -1,0 +1,15 @@
+= form_for topic do |f|
+  - topic.errors.any?
+    ul
+      - topic.errors.full_messages.each do |e|
+        li= e
+  .form-group
+    = f.text_field :title, placeholder: "Title", class: "form-control"
+  .form-group
+    = f.text_area :description, placeholder: "Description", rows: 6, class: "form-control"
+  .checkbox
+    label
+      = f.check_box :presentable
+      | I'd like to present
+  .form-group
+    button.btn.btn-primary #{submit}

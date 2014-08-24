@@ -1,0 +1,32 @@
+- if user_signed_in?
+  li
+    = link_to "Logout", destroy_user_session_path, method: :delete
+  li
+    = link_to "#{current_user.name}", edit_user_registration_path
+- else
+  li
+    = link_to "Sign up", new_user_registration_path
+  li
+    .btn-group
+      button#loginDropdown.btn.btn-default.navbar-btn.dropdown-toggle type="button"
+        | Sign in 
+        span.caret
+      ul.dropdown-menu.signin-menu role="menu"
+        li.dropdown-header Login with
+        li
+          = link_to user_omniauth_authorize_path(:github) do
+            i.fa.fa-github
+            |  Github
+        li
+          = link_to user_omniauth_authorize_path(:facebook) do
+            i.fa.fa-facebook-square
+            |  Facebook
+        li.divider
+        li
+          = form_for(:user, url: session_path(:user)) do |f|
+            .form-group
+              = f.text_field :email, class: "form-control input-sm", placeholder: "Email"
+            .form-group
+              = f.password_field :password, class: "form-control input-sm", placeholder: "Password"
+            = f.submit 'Sign In', class: 'btn btn-default btn-sm'
+            = link_to 'Forgot Password', new_password_path(:user), class: 'btn-sm'

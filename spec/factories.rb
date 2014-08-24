@@ -7,8 +7,8 @@ FactoryGirl.define do
   end
 
   factory :topic do
-    sequence(:title) { |n| "Topic Title #{n}" }
+    sequence(:title)       { |n| "Topic Title #{n}" }
     sequence(:description) { |n| "Topic Description #{n}" }
-    user
+    creator                { create :user }
   end
 end

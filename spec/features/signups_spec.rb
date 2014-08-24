@@ -17,7 +17,7 @@ feature "Signups", :type => :feature do
 
       it "should create user" do
         expect { click_button 'Sign up' }.to change(User, :count).by(1)
-        expect(current_path).to eq(root_path)        
+        expect(current_path).to eq(root_path)
         expect(page).to have_selector('a', text: "Logout")
       end
     end

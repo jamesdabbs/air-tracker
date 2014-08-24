@@ -3,9 +3,14 @@ class TopicsController < ApplicationController
   before_filter :find_topic, only: [:show, :upvote, :downvote]
 
   def index
-    @topics = Topic.page params[:page]
-    @votes = current_user.votes.where(topic: @topics).
-      each_with_object({}) { |v,h| h[v.topic] = v } if current_user
+    @scheduled = Topic.scheduled.order(scheduled_for: :asc).includes(:creator)
+    # TODO: order by vote count
+    @topics = Topic.unscheduled.includes(:creator, :votes).page(params[:page])
+    @votes = {}
+
+    current_user.votes.where(topic: @topics).each do |v|
+      @votes[v.topic_id] = v.score > 0 ? :up : :down
+    end if current_user
   end
 
   def new
@@ -18,6 +23,19 @@ class TopicsController < ApplicationController
       redirect_to @topic, flash: { success: "Created new topic: #{@topic.title}" }
     else
       render :new
+    end
+  end
+
+  def edit
+    @topic = current_user.topics.find params[:id]
+  end
+
+  def update
+    @topic = current_user.topics.find params[:id]
+    if @topic.update create_params
+      redirect_to @topic, flash: { success: "Updated topic" }
+    else
+      render :edit
     end
   end
 
@@ -41,6 +59,6 @@ private
   end
 
   def create_params
-    params.require(:topic).permit(:title, :description)
+    params.require(:topic).permit(:title, :description, :presentable)
   end
 end

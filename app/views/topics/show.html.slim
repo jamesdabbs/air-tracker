@@ -1,6 +1,18 @@
-h1= @topic.title
-small
-  | Created by
-  = @topic.user.name
+- if current_user == @topic.creator
+  = link_to "Edit Topic", edit_topic_path(@topic), class: "btn btn-default"
 
-p= @topic.description
+h1
+  = @topic.title
+  |  
+  - if @topic.scheduled_for
+    small
+      = link_to @topic.meetup_url do
+        = @topic.scheduled_for.strftime("%B %d @ %H:%M")
+
+- if current_user == @topic.creator && @topic.presentable?
+  span.label.label-success You're presenting!
+- else
+  p Proposed by #{@topic.creator.name}
+
+.topic-description
+  = markdown @topic.description

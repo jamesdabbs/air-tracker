@@ -22,7 +22,7 @@ gem 'figaro'
 
 gem 'rollbar'
 
-gem 'erb2haml'
+gem 'redcarpet'
 
 group :development do
   gem 'better_errors'

@@ -1,21 +1,39 @@
-<div class="col-md-4">
-	<h2>Sign up</h2>
-	<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-	  <%= devise_error_messages! %>
-	  <div class="form-group">
-	  	<%= f.label :name %><br/>
-	  	<%= f.text_field :name, autofocus: true, class: "form-control" %>
-	  </div>
-	  <div class="form-group"><%= f.label :email %><br />
-	  <%= f.email_field :email, class: "form-control" %></div>
+<div class="page-header">
+  <h1>Sign up</h1>
+</div>
 
-	  <div class="form-group"><%= f.label :password %><br />
-	    <%= f.password_field :password, autocomplete: "off", class: "form-control" %></div>
+<div class="row">
+  <div class="col-md-6">
+    <p>For quick sign up, use one of</p>
 
-	  <div class="form-group"><%= f.label :password_confirmation %><br />
-	    <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %></div>
+    <div class="btn-group">
+      <%= link_to user_omniauth_authorize_path(:github), class: "btn btn-default btn-lg" do %>
+        <i class="fa fa-github"></i> Github
+      <% end %>
+      <%= link_to user_omniauth_authorize_path(:facebook), class: "btn btn-default btn-lg" do %>
+        <i class="fa fa-facebook-square"></i> Facebook
+      <% end %>
+    </div>
+  </div>
 
-	  <div><%= f.submit "Sign up", class: "btn btn-default" %></div>
-	<% end %>
-	<%= render "devise/shared/links" %>
+  <div class="col-md-6">
+    <p>Alternatively, you can create a new account</p>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+      <div class="form-group">
+        <%= f.label :name %><br/>
+        <%= f.text_field :name, autofocus: true, class: "form-control" %>
+      </div>
+      <div class="form-group"><%= f.label :email %><br />
+        <%= f.email_field :email, class: "form-control" %></div>
+
+      <div class="form-group"><%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: "off", class: "form-control" %></div>
+
+      <div class="form-group"><%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %></div>
+
+      <div><%= f.submit "Sign up", class: "btn btn-default" %></div>
+    <% end %>
+  </div>
 </div>

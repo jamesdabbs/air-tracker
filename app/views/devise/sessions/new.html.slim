@@ -1,0 +1,25 @@
+p Please sign in with one of
+
+.btn-group
+  = link_to user_omniauth_authorize_path(:github), class: "btn btn-default btn-lg" do
+    i.fa.fa-github
+    |  Github
+  = link_to user_omniauth_authorize_path(:facebook), class: "btn btn-default btn-lg" do
+    i.fa.fa-facebook-square
+    |  Facebook
+
+
+.page-header
+
+p If you registered an account on this site, you can also sign in directly
+
+= form_for resource, as: resource_name, url: session_path(resource_name) do |f|
+  .form-group
+    = f.label :email
+    = f.email_field :email, autofocus: true, class: "form-control"
+
+  .form-group
+    = f.label :password
+    = f.password_field :password, autocomplete: "off", class: "form-control"
+
+  button.btn.btn-primary Sign in

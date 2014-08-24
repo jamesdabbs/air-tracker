@@ -1,7 +1,34 @@
+= link_to "New Topic", new_topic_path, class: "btn btn-default"
 
-/ TODO: add page controls
-.row
+- if @scheduled.any?
+  .page-title
+    h2 Upcoming Talks
+
   table.table.table-hover
+    thead
+      tr
+        th Topic
+        th Details
+    tbody
+      - @scheduled.each do |topic|
+        tr
+          td
+            .media-body
+              h4.media-heading
+                = link_to topic.title, topic
+                small= " by #{topic.creator.name}"
+              = topic.short_description
+          td
+            = link_to topic.meetup_url do
+              = topic.scheduled_for.strftime("%B %d @ %H:%M")
+
+
+.page-title
+  h2 Proposed Topics
+.row
+  = paginate @topics
+.row
+  table.table.table-hover.proposed
     thead
       tr
         th
@@ -11,20 +38,19 @@
       - @topics.each do |topic|
         tr
           td
-            / FIXME: add active status
-            = link_to upvote_topic_path(topic), method: :post, class: 'upvote' do
-              i.fa.fa-arrow-up
-            = link_to downvote_topic_path(topic), method: :post, class: 'downvote' do
-              i.fa.fa-arrow-down
+            - if @votes[topic.id]
+              a.btn.btn-default(disabled="disabled")
+                i.fa.fa-thumbs-up
+            - else
+              = link_to upvote_topic_path(topic), method: :post, class: 'btn btn-default upvote' do
+                i.fa.fa-thumbs-o-up
           td
             .media-body
               h4.media-heading
                 = link_to topic.title, topic
                 / FIXME: n+1
-                small = " by #{topic.user.name}"              
+                small= " by #{topic.creator.name}"
               = topic.short_description
 
           td.col-md-3
-            = topic.upvotes.count
-.row
-  = paginate @topics
+            = topic.score
