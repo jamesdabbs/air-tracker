@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
+ruby '2.1.2'
 
 gem 'bootstrap-sass'
 gem 'font-awesome-sass'
@@ -39,8 +39,11 @@ group :development, :test do
 end
 
 group :test do
+  # General test assertions
   gem 'rspec-rails'
+  # Interacting with web requests, headless
   gem 'capybara'
+  # Parse HTML
   gem 'nokogiri', '1.6.1'
   gem 'launchy'
   gem 'simplecov'
