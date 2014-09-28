@@ -13,6 +13,7 @@ gem 'devise'
 gem 'slim-rails'
 gem 'hashie'
 gem 'kaminari'
+gem 'jbuilder'
 
 gem 'omniauth'
 gem 'omniauth-facebook'
